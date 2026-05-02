@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define HEAP_SIZE 64   // Small size for clear terminal visualization
-#define MIN_SPLIT 2    // Minimum size to split a block
+#define HEAP_SIZE 64 
+#define MIN_SPLIT 2
 
 typedef struct Block {
     int size;
@@ -14,7 +14,6 @@ typedef struct Block {
 char heap[HEAP_SIZE]; 
 Block* head;
 
-// Initialize the "Heap"
 void init_heap() {
     head = (Block*)malloc(sizeof(Block));
     head->size = HEAP_SIZE;
@@ -22,22 +21,21 @@ void init_heap() {
     head->next = NULL;
 }
 
-// Visualization Logic
 void visualize_heap() {
     printf("\n[");
     Block* curr = head;
     while (curr) {
         for (int i = 0; i < curr->size; i++) {
-            if (curr->is_free) printf("."); // . = Free
-            else printf("#");               // # = Allocated
+            if (curr->is_free) printf("."); 
+            else printf("#");               
         }
-        if (curr->next) printf("|");        // | = Block boundary
+        if (curr->next) printf("|");       
         curr = curr->next;
     }
     printf("]\n");
 }
 
-// Analysis Logic
+
 void analyze_fragmentation() {
     int total_free = 0;
     int max_contiguous = 0;
@@ -60,7 +58,7 @@ void analyze_fragmentation() {
     printf("External Fragmentation Index: %.2f (0.00 is perfect)\n", frag_ratio);
 }
 
-// Allocation Logic (First Fit) based on Screenshot 2026-05-01 at 9.00.47 AM.jpg
+
 void allocate(int request_size) {
     Block* curr = head;
     while (curr && (curr->is_free == 0 || curr->size < request_size)) {
@@ -85,7 +83,7 @@ void allocate(int request_size) {
     }
 }
 
-// Simple Free Logic
+
 void deallocate(int target_size) {
     Block* curr = head;
     while (curr) {
